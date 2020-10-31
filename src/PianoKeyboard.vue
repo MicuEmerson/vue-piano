@@ -42,7 +42,7 @@
 import * as Tone from "tone";
 
 export default {
-
+  name: "PianoKeyboard",
   data: function () {
     return {
 

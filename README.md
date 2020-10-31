@@ -1,4 +1,4 @@
-# yo
+# vue-piano
 
 ## Project setup
 ```

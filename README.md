@@ -39,7 +39,7 @@ export default {
 
 ## Audio
 
-vue-piano component uses Tone.js library for audio playback of each note, more specifically it uses Tone.Synth (that's why the size of the components it's pretty big).
+vue-piano component uses Tone.js library for audio playback of each note, more specifically it uses Tone.Synth (that's why the size of the component it's pretty big).
 
 ## Props
 

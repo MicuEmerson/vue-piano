@@ -1,7 +1,7 @@
 {
   "name": "vue-piano-keyboard",
   "description": "A piano keyboard component for Vue.js 2+",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "private": false,
   "author": "emicu <micuemerson@gmail.com>",
   "license": "MIT",

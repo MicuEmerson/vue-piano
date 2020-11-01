@@ -47,16 +47,10 @@ export default {
     return {
 
          /* Tone.js Synth instance which help us to play musical notes */
-        synth : {
-            type: Tone.Synth,
-            default : null
-        },
+        synth : null,
 
         /* Helper map for pressed key, (e.g notesIndexesByKey['a'] = 4, we found the note which coresponds to 'a' key at index 4 in notes array) */
-        notesIndexesByKey: {
-            type: Object,
-            default : {}
-        },
+        notesIndexesByKey: {},
 
         /* Here we need generate notes, it contains objects of the form 
             { 
@@ -78,16 +72,10 @@ export default {
         allNotes: ['C', 'D', 'E', 'F', 'G', 'A', 'B'],
 
         /* As name says */
-        whiteNoteWidthSize: {
-            type : Number,
-            default : 0
-        },
+        whiteNoteWidthSize: 0,
 
         /* It's used to play note when mouse is pressed and note is hovered */
-        isMousePressed: {
-            type: Boolean,
-            default: false,
-        }
+        isMousePressed: false
     };
   },
 

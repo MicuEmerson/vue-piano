@@ -9,7 +9,7 @@
       </div>
     </div>
 
-    <div class="piano-container">
+    <div style="height: 300px">
       <PianoKeyboard/>
     </div>
   </div>
@@ -58,6 +58,7 @@ body, html {
 .piano-container {
   margin-left: 8%;
   margin-right: 8%;
+  height: 30%;
 }
 
 .config-container {

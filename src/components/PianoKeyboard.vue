@@ -42,7 +42,7 @@
 import * as Tone from "tone";
 
 export default {
-  name: "PianoKeyboard",
+
   data: function () {
     return {
 
@@ -270,7 +270,7 @@ export default {
 <style>
 .piano-keyboard {
   position: relative;
-  height: 14vw;
+  height: 100%;
   width: 100%;
 }
  

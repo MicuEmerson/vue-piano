@@ -1,7 +1,7 @@
 {
   "name": "vue-piano-keyboard",
   "description": "A piano keyboard component for Vue.js 2+",
-  "version": "1.0.3",
+  "version": "1.0.8",
   "private": false,
   "author": "emicu <micuemerson@gmail.com>",
   "license": "MIT",
@@ -18,7 +18,7 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "build:npm": "vue-cli-service build --target lib --name pianoKeyboard src/PianoKeyboard.vue"
+    "build:npm": "vue-cli-service build --target lib --name pianoKeyboard src/components/PianoKeyboard.vue"
   },
   "main": "dist/pianoKeyboard.umd.js",
   "unpkg": "dist/pianoKeyboard.umd.min.js",

@@ -13,7 +13,8 @@
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
 
-dist
+# dist
+deploy.sh
 
 # Mono auto generated files
 mono_crash.*

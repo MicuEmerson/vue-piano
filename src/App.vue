@@ -2,16 +2,67 @@
   <div id="app">
     <h1> Vue Piano Component </h1>
 
-    <div class="config-container">
-      <h2> Configuration </h2>
+    <section class="config-container">
       <div>
-        #todo
+        <h2> Configuration </h2>
+          <!-- <hr> -->
       </div>
-    </div>
+      <!-- <div style="width: 50%"> -->
+        <div class="config-elem">
+          <div class="config-elem-cell">
+            <div> All keys: </div>
+            <textarea :value="allKeys" @change="handleAllKeysChanges" rows="2" cols="60"
+              style="margin-top: 1.5%" placeholder="add keys followed by semicolumns (e.g: a,s,d...)">
+            </textarea>
+          </div>
+        </div>
 
-    <div style="height: 300px">
-      <PianoKeyboard/>
-    </div>
+        <div class="config-elem">
+          <div class="config-elem-cell">
+            <label> Show Keys: </label> <input type="checkbox" v-model="showKeys"/>
+          </div>
+          <div class="config-elem-cell">
+            <label> Show Notes: </label> <input type="checkbox" v-model="showNotes"/> 
+          </div>
+          <div class="config-elem-cell">
+            <label> Sustain: </label> <input type="checkbox" v-model="sustain"/> 
+          </div>
+        </div>
+
+        <div class="config-elem">
+          <div class="config-elem-cell">
+            <label> White Note Color: </label> <input v-model="whiteNoteColor" type="color">
+          </div>
+          <div class="config-elem-cell">
+            <label> Black Note Color: </label> <input v-model="blackNoteColor" type="color">
+          </div>
+        </div>
+
+        <div class="config-elem">
+          <div class="config-elem-cell">
+            <label> Start Octave </label> <input v-model="startOctave" min="1" max="8" type="number">
+          </div>
+          <div class="config-elem-cell">
+            <label> End Octave: </label> <input v-model="endOctave" min="1" max="8" type="number">
+          </div>
+        </div>
+      <!-- </div> -->
+
+      <!-- <div> <hr> </div> -->
+    </section>
+
+    <section class="piano-container">
+      <PianoKeyboard 
+        :showKeys="showKeys"
+        :showNotes="showNotes"
+        :sustain="sustain"
+        :whiteNoteColor="whiteNoteColor"
+        :blackNoteColor="blackNoteColor"
+        :startOctave="startOctave"
+        :endOctave="endOctave"
+        :allKeys="allKeys"
+      />
+    </section>
   </div>
 </template>
 
@@ -20,8 +71,29 @@ import PianoKeyboard from "./components/PianoKeyboard"
 
 export default {
   name: 'App',
+  data: function () {
+    return { 
+      whiteNoteColor: "#1eb7eb",
+      blackNoteColor: "#f9bb2d",
+      showKeys: false,
+      showNotes: false,
+      sustain: false,
+      startOctave: 2,
+      endOctave: 4,
+      allKeys: [ '`', `1`, '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=',
+            'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', '[', ']', '\\',
+            'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ';',
+            'z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.' ]
+    }
+  },
   components: {
     PianoKeyboard
+  },
+  methods: {
+    handleAllKeysChanges: function(e){
+      this.allKeys = e.srcElement.value.split(',').map(elem => elem.trim())
+      
+    }
   }
 }
 </script>
@@ -52,7 +124,6 @@ body, html {
   height: 100%;
   margin: 0;
   padding: 0;
-  /* overflow-y: hidden; */
 }
 
 .piano-container {
@@ -63,5 +134,20 @@ body, html {
 
 .config-container {
   text-align: left;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  height: 40%;
+  width: 60%;
+  padding-left: 6%;
+}
+
+.config-elem {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.config-elem-cell {
+  margin-right: 5%;
 }
 </style>

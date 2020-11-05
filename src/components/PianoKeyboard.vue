@@ -52,7 +52,7 @@ export default {
         /* Helper map for pressed key, (e.g notesIndexesByKey['a'] = 4, we found the note which coresponds to 'a' key at index 4 in notes array) */
         notesIndexesByKey: {},
 
-        /* Here we need generate notes, it contains objects of the form 
+        /* Array with generated notes of the form 
             { 
                 note: <C4>,
                 key: <a>,
@@ -127,6 +127,20 @@ export default {
     }
   },
 
+  watch: {
+    startOctave(val){
+      this.startOctave = val;
+      this.regenerate();
+    },
+    endOctave(val){
+      this.endOctave = val;
+      this.regenerate();
+    },
+    allKeys(val){
+      this.allKeys = val;
+      this.regenerate();
+    }
+  },
 
   created() {
     this.synth = new Tone.Synth().toDestination();
@@ -204,7 +218,6 @@ export default {
         let keyIndex = 0;
         let noteIndex = 0;
         this.notes.length = 0;
-
         for(let octave = this.startOctave; octave <= this.endOctave; octave++) {
 
             while(noteIndex < this.allNotes.length) {
@@ -241,15 +254,18 @@ export default {
     },
 
     generateNotesIndexesByKey: function() {
-        this.notesIndexesByKey.length = 0;
-
+        this.notesIndexesByKey = {}
         for(let index = 0; index < this.notes.length; index++){
             this.notesIndexesByKey[this.notes[index].key] = index;
 
             if(this.notes[index].blackNote != undefined)
                 this.notesIndexesByKey[this.notes[index].blackNote.key] = index;
-            
         }
+    },
+
+    regenerate: function() {
+      this.generateNotes();
+      this.generateNotesIndexesByKey();
     },
   },
 }

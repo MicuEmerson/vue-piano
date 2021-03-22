@@ -29,8 +29,8 @@
           </div>
           <div v-if="indianNotes" class="config-elem-cell">            
             <select v-model="noteConfig.scale">
-            <option disabled value="">Please select one</option>
-            <option>C</option>
+            <option disabled value="">Please select scale</option>
+            <option selected>C</option>
             <option>C#</option>
             <option>D</option>
             <option>D#</option>
@@ -42,8 +42,7 @@
             <option>A</option>
             <option>A#</option>
             <option>B</option>
-          </select>
-          <span>Selected: {{ noteConfig.scale }}</span>
+          </select>          
           </div>
           <div class="config-elem-cell">
             <label> Sustain: </label> <input type="checkbox" v-model="sustain"/> 
@@ -109,7 +108,7 @@ export default {
             'z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.' ],
       indianNotes: false,
       noteConfig:{
-        scale: "D",
+        scale: "C",
         middleOctave: 4,
         lang: "bn"
       }
@@ -166,7 +165,7 @@ body, html {
   justify-content: space-between;
   flex-direction: column;
   height: 40%;
-  width: 60%;
+  width: 70%;
   padding-left: 6%;
 }
 

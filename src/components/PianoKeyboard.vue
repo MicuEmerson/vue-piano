@@ -18,8 +18,8 @@
                     {{noteObject.blackNote.key}}
                 </div>
                  
-                <div v-if="showNotes" class="key-text key-text-on-black-note">
-                    {{noteObject.blackNote.note}}
+                <div v-if="showNotes" :class="['key-text','key-text-on-black-note',indianNotes?'':'key-text-vertical']">
+                    {{noteObject.blackNote.label}}
                 </div>
             </div>
           </div> 
@@ -30,7 +30,7 @@
             </div>
 
             <div v-if="showNotes" class="key-text">
-                {{noteObject.note}}
+                {{noteObject.label}}
             </div>
           </div>
 
@@ -40,6 +40,7 @@
 
 <script>
 import * as Tone from "tone";
+import {getIndianNotation} from "./indian-note-util"
 
 export default {
 
@@ -124,6 +125,22 @@ export default {
     sustain: {
         type: Boolean,
         default: false
+    },
+
+    indianNotes:{
+        type: Boolean,
+        default: false
+    },
+
+    noteConfig:{
+        type: Object,        
+        default: function () {
+          return {
+            scale: "C",
+            middleOctave: 4,
+            lang: "hi"
+          }
+        },
     }
   },
 
@@ -138,6 +155,10 @@ export default {
     },
     allKeys(val){
       this.allKeys = val;
+      this.regenerate();
+    },
+    indianNotes(val){
+      this.indianNotes = val;
       this.regenerate();
     }
   },
@@ -227,6 +248,7 @@ export default {
                     note: currentNote + octave,
                     key: this.allKeys[keyIndex++],
                     pressed: false,
+                    label: this.getLabel(currentNote, octave)
                 }
 
                 if(currentNote !== "B" && currentNote !== "E") {
@@ -234,6 +256,7 @@ export default {
                         note: currentNote + '#' + octave,
                         key: this.allKeys[keyIndex++],
                         pressed: false,
+                        label: this.getLabel(currentNote+'#', octave)
                     }
 
                     newNote["blackNote"] = blackNote;
@@ -267,6 +290,11 @@ export default {
       this.generateNotes();
       this.generateNotesIndexesByKey();
     },
+
+    getLabel: function(note, octave){
+      let relativeOctave = (octave - this.noteConfig.middleOctave) + 1;      
+      return this.indianNotes? getIndianNotation(note,this.noteConfig.scale,this.noteConfig.lang, relativeOctave): note;
+    }
   },
 }
 </script>
@@ -338,10 +366,13 @@ export default {
   margin-top: 0.8vw;
 }
  
-.key-text-on-black-note {
-  transform: rotate(-90deg);
+.key-text-on-black-note { 
   margin: 0.8vw 0;
   margin-top: 1vw;
+}
+
+.key-text-vertical {
+   transform: rotate(-90deg);
 }
  
 .key-input {

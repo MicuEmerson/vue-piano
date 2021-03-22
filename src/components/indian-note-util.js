@@ -15,22 +15,34 @@ let indicScripts = {
     ]
 };
 
-function getScaleMap(scale) {
 
+function getScaleMap(scale, octave=4) {
+    console.log("scale: " + scale + ", octave: " + octave)
     let index = western.indexOf(scale);
     if (index == -1) {
         throw "Scale not supported: " + scale;
     }
 
-    for (let i = 0; i < index; i++) {
-        indianPhonetic.unshift(indianPhonetic.pop())
+    let allNotes = [];
+    for (let oct = 1; oct <= 8; oct++) {
+        western.forEach(note => {
+            allNotes.push(note + oct);
+        })
     }
 
-    let scaleMap = {}
-    western.forEach((n, i) => {
-        scaleMap[n] = indianPhonetic[i];
-    })
+    let allPhonetic = []
+    for (let oct = 0; oct <= 2; oct++) {
+        indianPhonetic.forEach(note => {
+            allPhonetic.push(note + oct);
+        })
+    }
 
+    let start = allNotes.indexOf(scale + (octave - 1))
+
+    let scaleMap = {};
+    for (let j = start, i = 0; j < start + 36; j++, i++) {
+        scaleMap[allNotes[j]] = allPhonetic[i]
+    }
     return scaleMap;
 }
 
@@ -56,19 +68,21 @@ function getTranslationLookup() {
 
 /**
  * It will return specific note in Indian format
- * 
- * @param {String} note Provide western note i.e. C, D# etc
- * @param {String} lang Language code in ISO 639-1 format, 
+ *
+ * @param {String} noteWithOctave Provide western note i.e. C1, D#2 etc
+ * @param {String} lang Language code in ISO 639-1 format,
  * currently Bengali (bn) and Hindi (hi) is supported
  */
-export const getIndianNotation = function (note, scale = "C", lang = "bn", octave = 0) {
-    if (octave >= 0 && octave <= 2) {
-        let map = getScaleMap(scale);
-        let phoneticNote = map[note];
-        const transMap = getTranslationLookup();
-        let translatedNote = transMap[lang][octave][phoneticNote];
+export const getIndianNotation = function (noteWithOctave, middleOctave, scale = "C", lang = "bn") {
+    let map = getScaleMap(scale, middleOctave);
+    const transMap = getTranslationLookup();
+    let phoneticNote = map[noteWithOctave];
+    if (phoneticNote) {
+        let newNote = phoneticNote.substring(0, phoneticNote.length - 1);
+        let newOctave = phoneticNote.substring(phoneticNote.length - 1);
+
+        let translatedNote = transMap[lang][newOctave][newNote];
         return translatedNote;
-    } else {
-        return "";
     }
+    return "";
 }

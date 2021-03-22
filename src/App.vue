@@ -24,6 +24,27 @@
           <div class="config-elem-cell">
             <label> Show Notes: </label> <input type="checkbox" v-model="showNotes"/> 
           </div>
+          <div v-if="showNotes" class="config-elem-cell">
+            <label> Indian Notes: </label> <input type="checkbox" v-model="indianNotes"/> 
+          </div>
+          <div v-if="indianNotes" class="config-elem-cell">            
+            <select v-model="noteConfig.scale">
+            <option disabled value="">Please select one</option>
+            <option>C</option>
+            <option>C#</option>
+            <option>D</option>
+            <option>D#</option>
+            <option>E</option>
+            <option>F</option>
+            <option>F#</option>
+            <option>G</option>
+            <option>G#</option>
+            <option>A</option>
+            <option>A#</option>
+            <option>B</option>
+          </select>
+          <span>Selected: {{ noteConfig.scale }}</span>
+          </div>
           <div class="config-elem-cell">
             <label> Sustain: </label> <input type="checkbox" v-model="sustain"/> 
           </div>
@@ -61,6 +82,8 @@
         :startOctave="startOctave"
         :endOctave="endOctave"
         :allKeys="allKeys"
+        :indianNotes="indianNotes"
+        :noteConfig="noteConfig"
       />
     </section>
   </div>
@@ -83,7 +106,13 @@ export default {
       allKeys: [ '`', `1`, '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=',
             'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', '[', ']', '\\',
             'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ';',
-            'z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.' ]
+            'z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.' ],
+      indianNotes: false,
+      noteConfig:{
+        scale: "D",
+        middleOctave: 4,
+        lang: "bn"
+      }
     }
   },
   components: {
@@ -91,8 +120,7 @@ export default {
   },
   methods: {
     handleAllKeysChanges: function(e){
-      this.allKeys = e.srcElement.value.split(',').map(elem => elem.trim())
-      
+      this.allKeys = e.srcElement.value.split(',').map(elem => elem.trim())      
     }
   }
 }

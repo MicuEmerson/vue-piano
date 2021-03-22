@@ -160,6 +160,11 @@ export default {
     indianNotes(val){
       this.indianNotes = val;
       this.regenerate();
+    },
+    scale(val){
+      console.log("scale changed");
+      this.noteConfig.scale = val;
+      this.regenerate();
     }
   },
 
@@ -198,6 +203,12 @@ export default {
     window.removeEventListener('keydown', () => {});
     window.removeEventListener('keyup', () => {});
     window.removeEventListener('onmouseup', () => {});
+  },
+
+  computed: {
+    scale() {
+      return this.noteConfig.scale;
+    }
   },
 
   methods: {
@@ -291,9 +302,8 @@ export default {
       this.generateNotesIndexesByKey();
     },
 
-    getLabel: function(note, octave){
-      let relativeOctave = (octave - this.noteConfig.middleOctave) + 1;      
-      return this.indianNotes? getIndianNotation(note,this.noteConfig.scale,this.noteConfig.lang, relativeOctave): note;
+    getLabel: function(note, octave){      
+      return this.indianNotes? getIndianNotation(note+octave,this.middleOctave, this.noteConfig.scale,this.noteConfig.lang): note;
     }
   },
 }

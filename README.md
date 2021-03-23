@@ -53,6 +53,8 @@ vue-piano component uses Tone.js library for audio playback of each note, more s
 | `startOctave` | Number | 2 | The notes will start from startOctave |
 | `endOctave` | Number | 4 | The notes will end at endOctave |
 | `sustain` | Boolean | false | It will sustain the note (some more seconds) after you release the key/click |
+| `indianNote` | Boolean | false | It will show Indian Note (Only applicable if `showNotes` is true) |
+| `noteConfig` | Object | {scale: "C", middleOctave: 4, lang: "hi"} | Configuration for Indian note (Only applicable if `indianNote` is true) |
 
 ## Style
 

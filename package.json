@@ -24,6 +24,7 @@
   "unpkg": "dist/pianoKeyboard.umd.min.js",
   "dependencies": {
     "core-js": "^3.6.5",
+    "swaralipi-core": "^0.1.0",
     "tone": "^14.7.58",
     "vue": "^2.6.11"
   },

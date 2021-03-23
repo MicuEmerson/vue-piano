@@ -24,10 +24,48 @@
           <div class="config-elem-cell">
             <label> Show Notes: </label> <input type="checkbox" v-model="showNotes"/> 
           </div>
+          <div v-if="showNotes" class="config-elem-cell">
+            <label> Indian Notes: </label> <input type="checkbox" v-model="indianNotes"/> 
+          </div>        
           <div class="config-elem-cell">
             <label> Sustain: </label> <input type="checkbox" v-model="sustain"/> 
           </div>
         </div>
+
+         <div v-if="indianNotes" class="config-elem">
+          <div class="config-elem-cell">            
+            <label> Notation Scale </label>       
+            <select v-model="noteConfig.scale">
+            <option disabled value="">Please select scale</option>
+            <option selected>C</option>
+            <option>C#</option>
+            <option>D</option>
+            <option>D#</option>
+            <option>E</option>
+            <option>F</option>
+            <option>F#</option>
+            <option>G</option>
+            <option>G#</option>
+            <option>A</option>
+            <option>A#</option>
+            <option>B</option>
+          </select>          
+          </div>
+
+          <div class="config-elem-cell">      
+            <label> Notation Language </label>       
+            <select v-model="noteConfig.lang">
+              <option disabled value="">Please select language</option>
+              <option selected value="bn">Bengali</option>
+              <option value="hi">Hindi</option>            
+            </select>          
+          </div>
+
+          <div class="config-elem-cell">
+            <label> Middle Octave </label> <input v-model="noteConfig.middleOctave" min="3" max="5" type="number">
+          </div>      
+
+         </div>
 
         <div class="config-elem">
           <div class="config-elem-cell">
@@ -61,6 +99,8 @@
         :startOctave="startOctave"
         :endOctave="endOctave"
         :allKeys="allKeys"
+        :indianNotes="indianNotes"
+        :noteConfig="noteConfig"
       />
     </section>
   </div>
@@ -83,7 +123,13 @@ export default {
       allKeys: [ '`', `1`, '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=',
             'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', '[', ']', '\\',
             'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ';',
-            'z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.' ]
+            'z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.' ],
+      indianNotes: false,
+      noteConfig:{
+        scale: "C",
+        middleOctave: 4,
+        lang: "bn"
+      }
     }
   },
   components: {
@@ -91,8 +137,7 @@ export default {
   },
   methods: {
     handleAllKeysChanges: function(e){
-      this.allKeys = e.srcElement.value.split(',').map(elem => elem.trim())
-      
+      this.allKeys = e.srcElement.value.split(',').map(elem => elem.trim())      
     }
   }
 }
@@ -138,7 +183,7 @@ body, html {
   justify-content: space-between;
   flex-direction: column;
   height: 40%;
-  width: 60%;
+  width: 70%;
   padding-left: 6%;
 }
 

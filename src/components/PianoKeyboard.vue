@@ -18,8 +18,8 @@
                     {{noteObject.blackNote.key}}
                 </div>
                  
-                <div v-if="showNotes" class="key-text key-text-on-black-note">
-                    {{noteObject.blackNote.note}}
+                <div v-if="showNotes" :class="['key-text','key-text-on-black-note',indianNotes?'':'key-text-vertical']">
+                    {{noteObject.blackNote.label}}
                 </div>
             </div>
           </div> 
@@ -30,7 +30,7 @@
             </div>
 
             <div v-if="showNotes" class="key-text">
-                {{noteObject.note}}
+                {{noteObject.label}}
             </div>
           </div>
 
@@ -40,6 +40,7 @@
 
 <script>
 import * as Tone from "tone";
+import SwaralipiCore from "swaralipi-core"
 
 export default {
 
@@ -75,7 +76,10 @@ export default {
         whiteNoteWidthSize: 0,
 
         /* It's used to play note when mouse is pressed and note is hovered */
-        isMousePressed: false
+        isMousePressed: false,
+
+        /* Swaralipi (Indian Sheet Music) Library Object */
+        swaralipi: null
     };
   },
 
@@ -124,6 +128,22 @@ export default {
     sustain: {
         type: Boolean,
         default: false
+    },
+
+    indianNotes:{
+        type: Boolean,
+        default: false
+    },
+
+    noteConfig:{
+        type: Object,        
+        default: function () {
+          return {
+            scale: "C",
+            middleOctave: 4,
+            lang: "hi"
+          }
+        },
     }
   },
 
@@ -139,14 +159,30 @@ export default {
     allKeys(val){
       this.allKeys = val;
       this.regenerate();
+    },
+    indianNotes(val){
+      this.indianNotes = val;
+      this.regenerate();
+    },
+    scale(val){      
+      this.noteConfig.scale = val;
+      this.regenerate();
+    },
+    middleOctave(val){      
+      this.noteConfig.middleOctave = val;
+      this.regenerate();
+    },
+    lang(val){      
+      this.noteConfig.lang = val;
+      this.regenerate();
     }
   },
 
   created() {
     this.synth = new Tone.Synth().toDestination();
-
     this.generateNotes();
     this.generateNotesIndexesByKey();
+    this.swaralipi = new SwaralipiCore(this.scale, this.middleOctave, this.lang)
 
     window.addEventListener("keydown", e => {
       const key = e.key;
@@ -177,6 +213,18 @@ export default {
     window.removeEventListener('keydown', () => {});
     window.removeEventListener('keyup', () => {});
     window.removeEventListener('onmouseup', () => {});
+  },
+
+  computed: {
+    scale() {
+      return this.noteConfig.scale;
+    },
+    lang(){
+      return this.noteConfig.lang;
+    },
+    middleOctave(){
+      return this.noteConfig.middleOctave;
+    }
   },
 
   methods: {
@@ -227,6 +275,7 @@ export default {
                     note: currentNote + octave,
                     key: this.allKeys[keyIndex++],
                     pressed: false,
+                    label: this.getLabel(currentNote, octave)
                 }
 
                 if(currentNote !== "B" && currentNote !== "E") {
@@ -234,6 +283,7 @@ export default {
                         note: currentNote + '#' + octave,
                         key: this.allKeys[keyIndex++],
                         pressed: false,
+                        label: this.getLabel(currentNote+'#', octave)
                     }
 
                     newNote["blackNote"] = blackNote;
@@ -264,9 +314,14 @@ export default {
     },
 
     regenerate: function() {
+      this.swaralipi = new SwaralipiCore(this.scale, this.middleOctave, this.lang)
       this.generateNotes();
       this.generateNotesIndexesByKey();
     },
+
+    getLabel: function(note, octave){      
+      return this.indianNotes? this.swaralipi.toIndianNote(note+octave): note;
+    }
   },
 }
 </script>
@@ -338,10 +393,13 @@ export default {
   margin-top: 0.8vw;
 }
  
-.key-text-on-black-note {
-  transform: rotate(-90deg);
+.key-text-on-black-note { 
   margin: 0.8vw 0;
   margin-top: 1vw;
+}
+
+.key-text-vertical {
+   transform: rotate(-90deg);
 }
  
 .key-input {

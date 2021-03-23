@@ -40,7 +40,7 @@
 
 <script>
 import * as Tone from "tone";
-import {getIndianNotation} from "./indian-note-util"
+import SwaralipiCore from "swaralipi-core"
 
 export default {
 
@@ -76,7 +76,10 @@ export default {
         whiteNoteWidthSize: 0,
 
         /* It's used to play note when mouse is pressed and note is hovered */
-        isMousePressed: false
+        isMousePressed: false,
+
+        /* Swaralipi (Indian Sheet Music) Library Object */
+        swaralipi: null
     };
   },
 
@@ -177,9 +180,9 @@ export default {
 
   created() {
     this.synth = new Tone.Synth().toDestination();
-
     this.generateNotes();
     this.generateNotesIndexesByKey();
+    this.swaralipi = new SwaralipiCore(this.scale, this.middleOctave, this.lang)
 
     window.addEventListener("keydown", e => {
       const key = e.key;
@@ -311,12 +314,13 @@ export default {
     },
 
     regenerate: function() {
+      this.swaralipi = new SwaralipiCore(this.scale, this.middleOctave, this.lang)
       this.generateNotes();
       this.generateNotesIndexesByKey();
     },
 
     getLabel: function(note, octave){      
-      return this.indianNotes? getIndianNotation(note+octave,this.middleOctave, this.noteConfig.scale,this.noteConfig.lang): note;
+      return this.indianNotes? this.swaralipi.toIndianNote(note+octave): note;
     }
   },
 }

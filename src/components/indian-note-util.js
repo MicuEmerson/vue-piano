@@ -16,7 +16,7 @@ let indicScripts = {
 };
 
 
-function getScaleMap(scale, octave=4) {
+function getScaleMap(scale, octave = 4) {
     console.log("scale: " + scale + ", octave: " + octave)
     let index = western.indexOf(scale);
     if (index == -1) {
@@ -67,10 +67,13 @@ function getTranslationLookup() {
 
 
 /**
- * It will return specific note in Indian format
+ * It will return specific note in Indian format as per Indian Notation System (Swaralipi)
  *
- * @param {String} noteWithOctave Provide western note i.e. C1, D#2 etc
+ * @param {String} noteWithOctave Provide western note with octave i.e. C1, D#2 etc (provide sharp instead of flat)
+ * @param {Number} middleOctave Only 3 octaves can be represented in the Indian Notation System (aka Swaralipi). So if you provide 
+ * 4, it will use 3rd, 4th & 5th octave
  * @param {String} lang Language code in ISO 639-1 format,
+ * @param {String} scale Major scale for Indian Notation 
  * currently Bengali (bn) and Hindi (hi) is supported
  */
 export const getIndianNotation = function (noteWithOctave, middleOctave, scale = "C", lang = "bn") {

@@ -26,8 +26,15 @@
           </div>
           <div v-if="showNotes" class="config-elem-cell">
             <label> Indian Notes: </label> <input type="checkbox" v-model="indianNotes"/> 
+          </div>        
+          <div class="config-elem-cell">
+            <label> Sustain: </label> <input type="checkbox" v-model="sustain"/> 
           </div>
-          <div v-if="indianNotes" class="config-elem-cell">            
+        </div>
+
+         <div v-if="indianNotes" class="config-elem">
+          <div class="config-elem-cell">            
+            <label> Notation Scale </label>       
             <select v-model="noteConfig.scale">
             <option disabled value="">Please select scale</option>
             <option selected>C</option>
@@ -44,10 +51,21 @@
             <option>B</option>
           </select>          
           </div>
-          <div class="config-elem-cell">
-            <label> Sustain: </label> <input type="checkbox" v-model="sustain"/> 
+
+          <div class="config-elem-cell">      
+            <label> Notation Language </label>       
+            <select v-model="noteConfig.lang">
+              <option disabled value="">Please select language</option>
+              <option selected value="bn">Bengali</option>
+              <option value="hi">Hindi</option>            
+            </select>          
           </div>
-        </div>
+
+          <div class="config-elem-cell">
+            <label> Middle Octave </label> <input v-model="noteConfig.middleOctave" min="3" max="5" type="number">
+          </div>      
+
+         </div>
 
         <div class="config-elem">
           <div class="config-elem-cell">

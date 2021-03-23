@@ -161,9 +161,16 @@ export default {
       this.indianNotes = val;
       this.regenerate();
     },
-    scale(val){
-      console.log("scale changed");
+    scale(val){      
       this.noteConfig.scale = val;
+      this.regenerate();
+    },
+    middleOctave(val){      
+      this.noteConfig.middleOctave = val;
+      this.regenerate();
+    },
+    lang(val){      
+      this.noteConfig.lang = val;
       this.regenerate();
     }
   },
@@ -208,6 +215,12 @@ export default {
   computed: {
     scale() {
       return this.noteConfig.scale;
+    },
+    lang(){
+      return this.noteConfig.lang;
+    },
+    middleOctave(){
+      return this.noteConfig.middleOctave;
     }
   },
 

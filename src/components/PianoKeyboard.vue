@@ -144,6 +144,11 @@ export default {
             lang: "hi"
           }
         },
+    },
+
+    tone:{
+        type: Boolean,
+        default: true
     }
   },
 
@@ -179,7 +184,10 @@ export default {
   },
 
   created() {
-    synth = new Tone.Synth().toDestination();
+    if(this.tone){
+        synth = new Tone.Synth().toDestination();
+    }
+  
     this.generateNotes();
     this.generateNotesIndexesByKey();
     this.swaralipi = new SwaralipiCore(this.scale, this.middleOctave, this.lang)
@@ -230,8 +238,9 @@ export default {
   methods: {
     playNote(noteObject) {
         if(!noteObject.pressed){
-            
-            synth.triggerAttackRelease(noteObject.note, this.sustain ? "2n" : "8n");
+            if(this.tone){
+              synth.triggerAttackRelease(noteObject.note, this.sustain ? "2n" : "8n");
+            }
             noteObject.pressed = true;
             this.$emit("noteClick",noteObject);
         }

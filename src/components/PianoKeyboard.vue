@@ -230,8 +230,10 @@ export default {
   methods: {
     playNote(noteObject) {
         if(!noteObject.pressed){
+            
             synth.triggerAttackRelease(noteObject.note, this.sustain ? "2n" : "8n");
             noteObject.pressed = true;
+            this.$emit("noteClick",noteObject);
         }
     },
 

@@ -101,6 +101,7 @@
         :allKeys="allKeys"
         :indianNotes="indianNotes"
         :noteConfig="noteConfig"
+        @noteClick="noteClick"
       />
     </section>
   </div>
@@ -138,6 +139,9 @@ export default {
   methods: {
     handleAllKeysChanges: function(e){
       this.allKeys = e.srcElement.value.split(',').map(elem => elem.trim())      
+    },
+    noteClick: function(n){
+      console.log(n)
     }
   }
 }

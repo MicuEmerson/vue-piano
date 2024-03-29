@@ -1,7 +1,7 @@
 {
   "name": "vue-piano-keyboard",
-  "description": "A piano keyboard component for Vue.js 2+",
-  "version": "1.0.9",
+  "description": "A piano keyboard component for Vue.js 3.x",
+  "version": "2.0.0",
   "private": false,
   "author": "emicu <micuemerson@gmail.com>",
   "license": "MIT",
@@ -26,7 +26,7 @@
     "core-js": "^3.6.5",
     "swaralipi-core": "^0.1.0",
     "tone": "^14.7.58",
-    "vue": "^2.6.11"
+    "vue": "^3.1.0"
   },
   "keywords": [
     "vue",
@@ -37,9 +37,9 @@
     "music"
   ],
   "devDependencies": {
-    "@vue/cli-plugin-babel": "~4.5.0",
-    "@vue/cli-service": "~4.5.0",
-    "vue-template-compiler": "^2.6.11"
+    "@vue/cli-plugin-babel": "~5.0.8",
+    "@vue/cli-service": "~5.0.8",
+    "@vue/compiler-sfc": "^3.1.0"
   },
   "browserslist": [
     "> 1%",

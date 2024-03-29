@@ -42,13 +42,13 @@
 import * as Tone from "tone";
 import SwaralipiCore from "swaralipi-core"
 
+/* Tone.js Synth instance which help us to play musical notes */
+let synth = null;
+
 export default {
 
   data: function () {
     return {
-
-         /* Tone.js Synth instance which help us to play musical notes */
-        synth : null,
 
         /* Helper map for pressed key, (e.g notesIndexesByKey['a'] = 4, we found the note which coresponds to 'a' key at index 4 in notes array) */
         notesIndexesByKey: {},
@@ -144,6 +144,11 @@ export default {
             lang: "hi"
           }
         },
+    },
+
+    tone:{
+        type: Boolean,
+        default: true
     }
   },
 
@@ -179,7 +184,10 @@ export default {
   },
 
   created() {
-    this.synth = new Tone.Synth().toDestination();
+    if(this.tone){
+        synth = new Tone.Synth().toDestination();
+    }
+  
     this.generateNotes();
     this.generateNotesIndexesByKey();
     this.swaralipi = new SwaralipiCore(this.scale, this.middleOctave, this.lang)
@@ -230,8 +238,11 @@ export default {
   methods: {
     playNote(noteObject) {
         if(!noteObject.pressed){
-            this.synth.triggerAttackRelease(noteObject.note, this.sustain ? "2n" : "8n");
+            if(this.tone){
+              synth.triggerAttackRelease(noteObject.note, this.sustain ? "2n" : "8n");
+            }
             noteObject.pressed = true;
+            this.$emit("noteClick",noteObject);
         }
     },
 
